@@ -1,11 +1,17 @@
 plugins {
    alias(libs.plugins.android.application)
    alias(libs.plugins.kotlin.android)
+   id("com.google.devtools.ksp")
+   id("com.google.dagger.hilt.android")
 }
 
 android {
    namespace = "com.latihan.dicodingevent"
    compileSdk = 34
+
+   buildFeatures {
+      viewBinding = true
+   }
 
    defaultConfig {
       applicationId = "com.latihan.dicodingevent"
@@ -51,4 +57,29 @@ dependencies {
    testImplementation(libs.junit)
    androidTestImplementation(libs.androidx.junit)
    androidTestImplementation(libs.androidx.espresso.core)
+
+   //Dagger Hilt
+   //noinspection GradleDependency
+   implementation(libs.hilt.android)
+   ksp(libs.dagger.compiler) // Dagger compiler
+   ksp(libs.hilt.compiler)   // Hilt compiler
+
+   // Retrofit
+   implementation(libs.retrofit)
+   implementation(libs.converter.gson)
+
+   // Coroutines
+   //noinspection GradleDependency
+   implementation (libs.kotlinx.coroutines.android)
+
+   // Glide
+   //noinspection GradleDependency,GradleDependency
+   implementation(libs.glide)
+   annotationProcessor(libs.compiler)
+
+   // Lifecycle
+   implementation(libs.androidx.lifecycle.viewmodel.ktx.v286)
+   implementation(libs.androidx.lifecycle.livedata.ktx.v286)
+   implementation(libs.androidx.lifecycle.runtime.ktx)
+
 }
