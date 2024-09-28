@@ -4,6 +4,9 @@
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/primary_color</item>
         <item name="colorOnPrimary">@color/white</item>
+        <item name="backgroundColor">@color/background_color</item>
+        <item name="backgroundTint">@color/white</item>
+        <item name="colorSurfaceContainerHigh">@color/search_view_color</item>
         <item name="colorOnBackground">@color/grey_on_background</item>
         <!-- Customize your theme here. -->
     </style>

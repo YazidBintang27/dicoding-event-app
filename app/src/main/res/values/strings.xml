@@ -6,4 +6,17 @@
     <string name="title_finished">Finished</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="upcoming_events">Upcoming events</string>
+    <string name="finished_events">Finished events</string>
+    <string name="owner_text">Diselenggarakan oleh: %1$s</string>
+    <string name="detail_event">Detail event</string>
+    <string name="quota">Sisa kuota: %1$s</string>
+    <string name="begin_time">Mulai: %1$s</string>
+    <string name="end_time">Selesai: %1$s</string>
+    <string name="category">Category: %1$s</string>
+    <string name="description">Deskripsi:</string>
+    <string name="location">Lokasi: %1$s</string>
+    <string name="register">Register</string>
+    <string name="search_event">Search event</string>
+    <string name="recommended_for_you">Recommended for you</string>
 </resources>

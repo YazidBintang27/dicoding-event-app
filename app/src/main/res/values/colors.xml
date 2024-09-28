@@ -3,5 +3,9 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="primary_color">#2D3E50</color>
+    <color name="background_color">#F4F4F4</color>
     <color name="grey_on_background">#262626</color>
+    <color name="indicator_color">#59FFFFFF</color>
+    <color name="transparent">#00000000</color>
+    <color name="search_view_color">#DDDDDD</color>
 </resources>

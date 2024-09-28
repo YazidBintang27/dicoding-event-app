@@ -4,6 +4,7 @@
     <item
         android:id="@+id/homeFragment"
         android:icon="@drawable/home_09_stroke_rounded"
+        android:checked="true"
         android:title="@string/title_home" />
 
     <item

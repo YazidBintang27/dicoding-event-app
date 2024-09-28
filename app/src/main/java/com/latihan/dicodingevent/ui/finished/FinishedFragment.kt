@@ -1,60 +1,79 @@
 package com.latihan.dicodingevent.ui.finished
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.latihan.dicodingevent.R
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.navigation.NavController
+import androidx.navigation.Navigation
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.latihan.dicodingevent.adapter.FinishedEventAdapter
+import com.latihan.dicodingevent.adapter.FinishedEventAdapter.OnItemClickCallback
+import com.latihan.dicodingevent.databinding.FragmentFinishedBinding
+import dagger.hilt.android.AndroidEntryPoint
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [FinishedFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
+@AndroidEntryPoint
 class FinishedFragment : Fragment() {
-   // TODO: Rename and change types of parameters
-   private var param1: String? = null
-   private var param2: String? = null
+
+   private lateinit var binding: FragmentFinishedBinding
+   private val finishedViewModel: FinishedViewModel by viewModels()
+   private val finishedEventAdapter: FinishedEventAdapter by lazy { FinishedEventAdapter() }
+   private lateinit var navController: NavController
 
    override fun onCreate(savedInstanceState: Bundle?) {
       super.onCreate(savedInstanceState)
-      arguments?.let {
-         param1 = it.getString(ARG_PARAM1)
-         param2 = it.getString(ARG_PARAM2)
-      }
    }
 
    override fun onCreateView(
       inflater: LayoutInflater, container: ViewGroup?,
       savedInstanceState: Bundle?
-   ): View? {
+   ): View {
       // Inflate the layout for this fragment
-      return inflater.inflate(R.layout.fragment_finished, container, false)
+      binding = FragmentFinishedBinding.inflate(inflater, container, false)
+      return binding.root
    }
 
-   companion object {
-      /**
-       * Use this factory method to create a new instance of
-       * this fragment using the provided parameters.
-       *
-       * @param param1 Parameter 1.
-       * @param param2 Parameter 2.
-       * @return A new instance of fragment FinishedFragment.
-       */
-      // TODO: Rename and change types and number of parameters
-      @JvmStatic
-      fun newInstance(param1: String, param2: String) =
-         FinishedFragment().apply {
-            arguments = Bundle().apply {
-               putString(ARG_PARAM1, param1)
-               putString(ARG_PARAM2, param2)
-            }
+   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+      super.onViewCreated(view, savedInstanceState)
+      navController = Navigation.findNavController(view)
+      observeLoadingState()
+      observeFinishedEvent()
+      navigateToDetail()
+   }
+
+   private fun observeFinishedEvent() {
+      finishedViewModel.finishedEventData.observe(viewLifecycleOwner) { response ->
+         binding.rvFinishedEvents.apply {
+            adapter = finishedEventAdapter
+            setHasFixedSize(true)
+            layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+            finishedEventAdapter.setData(response)
          }
+      }
+   }
+
+   private fun observeLoadingState() {
+      finishedViewModel.isLoading.observe(viewLifecycleOwner) { response ->
+         showLoading(response)
+      }
+   }
+
+   private fun navigateToDetail() {
+      finishedEventAdapter.setOnItemClickCallback(object: OnItemClickCallback {
+         override fun onItemClicked(id: Int) {
+            val toDetailFragment = FinishedFragmentDirections
+               .actionFinishedFragmentToDetailFragment()
+            toDetailFragment.id = id
+            Log.d("FinishedFragment", "Id: $id")
+            navController.navigate(toDetailFragment)
+         }
+      })
+   }
+
+   private fun showLoading(isLoading: Boolean) {
+      binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
    }
 }

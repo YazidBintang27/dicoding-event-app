@@ -1,60 +1,94 @@
 package com.latihan.dicodingevent.ui.detail
 
+import android.annotation.SuppressLint
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.text.HtmlCompat
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.navigation.NavController
+import androidx.navigation.Navigation
+import com.bumptech.glide.Glide
 import com.latihan.dicodingevent.R
+import com.latihan.dicodingevent.databinding.FragmentDetailBinding
+import dagger.hilt.android.AndroidEntryPoint
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [DetailFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
+@AndroidEntryPoint
 class DetailFragment : Fragment() {
-   // TODO: Rename and change types of parameters
-   private var param1: String? = null
-   private var param2: String? = null
+
+   private lateinit var binding: FragmentDetailBinding
+   private lateinit var navController: NavController
+   private val detailViewModel: DetailViewModel by viewModels()
 
    override fun onCreate(savedInstanceState: Bundle?) {
       super.onCreate(savedInstanceState)
-      arguments?.let {
-         param1 = it.getString(ARG_PARAM1)
-         param2 = it.getString(ARG_PARAM2)
-      }
    }
 
    override fun onCreateView(
       inflater: LayoutInflater, container: ViewGroup?,
       savedInstanceState: Bundle?
-   ): View? {
+   ): View {
       // Inflate the layout for this fragment
+      binding = FragmentDetailBinding.inflate(inflater, container, false)
       return inflater.inflate(R.layout.fragment_detail, container, false)
    }
 
-   companion object {
-      /**
-       * Use this factory method to create a new instance of
-       * this fragment using the provided parameters.
-       *
-       * @param param1 Parameter 1.
-       * @param param2 Parameter 2.
-       * @return A new instance of fragment DetailFragment.
-       */
-      // TODO: Rename and change types and number of parameters
-      @JvmStatic
-      fun newInstance(param1: String, param2: String) =
-         DetailFragment().apply {
-            arguments = Bundle().apply {
-               putString(ARG_PARAM1, param1)
-               putString(ARG_PARAM2, param2)
-            }
+   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+      super.onViewCreated(view, savedInstanceState)
+      navController = Navigation.findNavController(view)
+      binding = FragmentDetailBinding.bind(view)
+      binding.myToolbar.setNavigationOnClickListener {
+         navController.navigateUp()
+      }
+      observeLoadingState()
+      val id = DetailFragmentArgs.fromBundle(arguments as Bundle).id
+      observeDetailEvent(id)
+   }
+
+   private fun observeDetailEvent(id: Int) {
+      detailViewModel.getEventById(id)
+      detailViewModel.detailEventModel.observe(viewLifecycleOwner) { response ->
+         val quota: Int = response?.quota?.minus(response.registrants ?: 0) ?: 0
+         register(response?.link)
+         binding.apply {
+            Glide.with(ivImageCover)
+               .load(response?.imageLogo)
+               .error(R.drawable.noimage)
+               .into(ivImageCover)
+            tvTitle.text = response?.name
+            tvOwner.text = getString(R.string.owner_text, response?.ownerName)
+            tvQuota.text = getString(R.string.quota, "$quota")
+            tvLocation.text = getString(R.string.location, response?.cityName)
+            tvCategory.text = getString(R.string.category, response?.category)
+            tvBeginTime.text = getString(R.string.begin_time, response?.beginTime)
+            tvEndTime.text = getString(R.string.end_time, response?.endTime)
+            tvDescription.text = HtmlCompat.fromHtml(
+               response?.description.toString(),
+               HtmlCompat.FROM_HTML_MODE_LEGACY
+            )
          }
+      }
+   }
+
+   private fun observeLoadingState() {
+      detailViewModel.isLoading.observe(viewLifecycleOwner) { response ->
+         showLoading(response)
+      }
+   }
+
+   @SuppressLint("QueryPermissionsNeeded")
+   private fun register(link: String?) {
+      binding.btnRegister.setOnClickListener {
+         val intent = Intent(Intent.ACTION_VIEW, Uri.parse(link))
+         startActivity(intent)
+      }
+   }
+
+   private fun showLoading(isLoading: Boolean) {
+      binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
    }
 }

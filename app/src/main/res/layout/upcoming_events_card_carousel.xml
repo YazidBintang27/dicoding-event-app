@@ -2,7 +2,7 @@
 <androidx.cardview.widget.CardView
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="150dp"
-    android:layout_height="250dp"
+    android:layout_height="240dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_marginStart="@dimen/activity_horizontal_margin"
@@ -15,31 +15,25 @@
         android:paddingBottom="12dp"
         android:orientation="vertical">
 
-        <androidx.cardview.widget.CardView
+        <ImageView
+            android:id="@+id/iv_upcoming_image"
             android:layout_width="match_parent"
-            android:layout_height="150dp"
-            app:cardCornerRadius="16dp"
-            app:cardElevation="0dp">
-
-            <ImageView
-                android:id="@+id/iv_upcoming_image"
-                android:layout_width="match_parent"
-                android:layout_height="150dp"
-                android:contentDescription="Event image"
-                tools:src="@drawable/noimage"
-                android:scaleType="centerCrop"
-                tools:ignore="HardcodedText" />
-
-        </androidx.cardview.widget.CardView>
+            android:layout_height="140dp"
+            android:contentDescription="Event image"
+            tools:src="@drawable/noimage"
+            android:layout_marginBottom="4dp"
+            android:scaleType="centerCrop"
+            tools:ignore="HardcodedText" />
 
         <TextView
+            android:id="@+id/tv_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
+            android:layout_marginHorizontal="8dp"
             tools:text="Career Session Android: Memulai Karir Sebagai Android Developer"
             android:textSize="14sp"
             android:fontFamily="@font/quicksand_semibold"
-            android:maxLines="2"
+            android:maxLines="3"
             android:ellipsize="end"
             android:textStyle="bold"/>
 
@@ -49,6 +43,7 @@
             android:layout_weight="1"/>
 
         <TextView
+            android:id="@+id/tv_category"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
