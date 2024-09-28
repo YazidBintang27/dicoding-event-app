@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@id/homeFragment">
+    app:startDestination="@id/splashFragment">
     <fragment
         android:id="@+id/searchFragment"
         android:name="com.latihan.dicodingevent.ui.search.SearchFragment"
@@ -35,11 +35,11 @@
         android:id="@+id/detailFragment"
         android:name="com.latihan.dicodingevent.ui.detail.DetailFragment"
         android:label="fragment_detail"
-        tools:layout="@layout/fragment_detail" >
+        tools:layout="@layout/fragment_detail">
         <argument
             android:name="id"
-            app:argType="integer"
-            android:defaultValue="8722" />
+            android:defaultValue="8722"
+            app:argType="integer" />
     </fragment>
     <fragment
         android:id="@+id/homeFragment"
@@ -47,7 +47,19 @@
         android:label="fragment_home"
         tools:layout="@layout/fragment_home" >
         <action
-            android:id="@+id/action_homeFragment2_to_detailFragment"
+            android:id="@+id/action_homeFragment_to_detailFragment"
             app:destination="@id/detailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/splashFragment"
+        android:name="com.latihan.dicodingevent.ui.splash.SplashFragment"
+        android:label="fragment_splash"
+        tools:layout="@layout/fragment_splash" >
+        <action
+            android:id="@+id/action_splashFragment_to_homeFragment"
+            app:destination="@id/homeFragment"
+            app:popUpTo="@id/splashFragment"
+            app:popUpToInclusive="true"
+            app:launchSingleTop="true" />
     </fragment>
 </navigation>
