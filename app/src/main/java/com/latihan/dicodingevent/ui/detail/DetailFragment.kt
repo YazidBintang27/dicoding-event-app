@@ -13,8 +13,10 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import com.bumptech.glide.Glide
+import com.google.android.material.snackbar.Snackbar
 import com.latihan.dicodingevent.R
 import com.latihan.dicodingevent.databinding.FragmentDetailBinding
+import com.latihan.dicodingevent.util.NetworkUtils
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -47,6 +49,10 @@ class DetailFragment : Fragment() {
       observeLoadingState()
       val id = DetailFragmentArgs.fromBundle(arguments as Bundle).id
       observeDetailEvent(id)
+      if (!NetworkUtils.isNetworkAvailable(requireContext())) {
+         showNoInternetWarning(view)
+         return
+      }
    }
 
    private fun observeDetailEvent(id: Int) {
@@ -90,5 +96,20 @@ class DetailFragment : Fragment() {
 
    private fun showLoading(isLoading: Boolean) {
       binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
+   }
+
+   @SuppressLint("ShowToast")
+   private fun showNoInternetWarning(view: View) {
+      Snackbar.make(view, "No Internet Connection", Snackbar.LENGTH_INDEFINITE)
+         .setAction("Retry") {
+            if (NetworkUtils.isNetworkAvailable(requireContext())) {
+               Snackbar.make(view, "Internet Connected", Snackbar.LENGTH_SHORT).dismiss()
+               observeLoadingState()
+               val id = DetailFragmentArgs.fromBundle(arguments as Bundle).id
+               observeDetailEvent(id)
+            } else {
+               Snackbar.make(view, "Still no internet connection", Snackbar.LENGTH_SHORT).show()
+            }
+         }.show()
    }
 }

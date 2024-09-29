@@ -1,5 +1,6 @@
 package com.latihan.dicodingevent.ui.upcoming
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -10,9 +11,11 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.snackbar.Snackbar
 import com.latihan.dicodingevent.adapter.UpcomingEventAdapter
 import com.latihan.dicodingevent.adapter.UpcomingEventAdapter.OnItemClickCallback
 import com.latihan.dicodingevent.databinding.FragmentUpcomingBinding
+import com.latihan.dicodingevent.util.NetworkUtils
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -42,6 +45,10 @@ class UpcomingFragment : Fragment() {
       observeLoadingState()
       observeUpcomingEvent()
       navigateToDetail()
+      if (!NetworkUtils.isNetworkAvailable(requireContext())) {
+         showNoInternetWarning(view)
+         return
+      }
    }
 
    private fun observeUpcomingEvent() {
@@ -74,5 +81,20 @@ class UpcomingFragment : Fragment() {
 
    private fun showLoading(isLoading: Boolean) {
       binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
+   }
+
+   @SuppressLint("ShowToast")
+   private fun showNoInternetWarning(view: View) {
+      Snackbar.make(view, "No Internet Connection", Snackbar.LENGTH_INDEFINITE)
+         .setAction("Retry") {
+            if (NetworkUtils.isNetworkAvailable(requireContext())) {
+               Snackbar.make(view, "Internet Connected", Snackbar.LENGTH_SHORT).dismiss()
+               observeLoadingState()
+               observeUpcomingEvent()
+               navigateToDetail()
+            } else {
+               Snackbar.make(view, "Still no internet connection", Snackbar.LENGTH_SHORT).show()
+            }
+         }.show()
    }
 }
