@@ -19,4 +19,6 @@
     <string name="register">Register</string>
     <string name="search_event">Search event</string>
     <string name="recommended_for_you">Recommended for you</string>
+    <string name="top_results">Top results</string>
+    <string name="no_data">No data</string>
 </resources>

@@ -1,60 +1,106 @@
 package com.latihan.dicodingevent.ui.search
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.latihan.dicodingevent.R
+import androidx.appcompat.widget.SearchView
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.navigation.NavController
+import androidx.navigation.Navigation
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.latihan.dicodingevent.adapter.SearchEventAdapter
+import com.latihan.dicodingevent.adapter.SearchEventAdapter.OnItemClickCallback
+import com.latihan.dicodingevent.databinding.FragmentSearchBinding
+import dagger.hilt.android.AndroidEntryPoint
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [SearchFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
+@AndroidEntryPoint
 class SearchFragment : Fragment() {
-   // TODO: Rename and change types of parameters
-   private var param1: String? = null
-   private var param2: String? = null
+
+   private lateinit var binding: FragmentSearchBinding
+   private lateinit var navController: NavController
+   private val searchViewModel: SearchViewModel by viewModels()
+   private val searchEventAdapter: SearchEventAdapter by lazy { SearchEventAdapter() }
 
    override fun onCreate(savedInstanceState: Bundle?) {
       super.onCreate(savedInstanceState)
-      arguments?.let {
-         param1 = it.getString(ARG_PARAM1)
-         param2 = it.getString(ARG_PARAM2)
-      }
    }
 
    override fun onCreateView(
       inflater: LayoutInflater, container: ViewGroup?,
       savedInstanceState: Bundle?
-   ): View? {
+   ): View {
       // Inflate the layout for this fragment
-      return inflater.inflate(R.layout.fragment_search, container, false)
+      binding = FragmentSearchBinding.inflate(inflater, container, false)
+      return binding.root
    }
 
-   companion object {
-      /**
-       * Use this factory method to create a new instance of
-       * this fragment using the provided parameters.
-       *
-       * @param param1 Parameter 1.
-       * @param param2 Parameter 2.
-       * @return A new instance of fragment SearchFragment.
-       */
-      // TODO: Rename and change types and number of parameters
-      @JvmStatic
-      fun newInstance(param1: String, param2: String) =
-         SearchFragment().apply {
-            arguments = Bundle().apply {
-               putString(ARG_PARAM1, param1)
-               putString(ARG_PARAM2, param2)
+   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+      super.onViewCreated(view, savedInstanceState)
+      navController = Navigation.findNavController(view)
+      navigateToDetail()
+      observeSearchEvent()
+   }
+
+   private fun observeSearchEvent() {
+      searchData()
+      searchViewModel.searchEventData.observe(viewLifecycleOwner) { response ->
+         binding.rvSearchResult.apply {
+            adapter = searchEventAdapter
+            setHasFixedSize(true)
+            layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+            searchEventAdapter.setData(response)
+         }
+         if (response?.size == 0) {
+            with (binding) {
+               tvResult.visibility = View.GONE
+               rvSearchResult.visibility = View.GONE
+               tvNoData.visibility = View.VISIBLE
+            }
+         } else {
+            with (binding) {
+               tvResult.visibility = View.VISIBLE
+               rvSearchResult.visibility = View.VISIBLE
+               tvNoData.visibility = View.GONE
             }
          }
+      }
+   }
+
+   private fun searchData() {
+      binding.searchView.setOnQueryTextListener(object: SearchView.OnQueryTextListener {
+         override fun onQueryTextSubmit(query: String?): Boolean {
+            return false
+         }
+
+         override fun onQueryTextChange(newText: String?): Boolean {
+            searchViewModel.searchData(newText ?: "")
+            observeLoadingState()
+            return true
+         }
+      })
+   }
+
+   private fun observeLoadingState() {
+      searchViewModel.isLoading.observe(viewLifecycleOwner) { response ->
+         showLoading(response)
+      }
+   }
+
+   private fun navigateToDetail() {
+      searchEventAdapter.setOnItemClickCallback(object: OnItemClickCallback {
+         override fun onItemClicked(id: Int) {
+            val toDetailFragment = SearchFragmentDirections.actionSearchFragmentToDetailFragment()
+            toDetailFragment.id = id
+            Log.d("FinishedFragment", "Id: $id")
+            navController.navigate(toDetailFragment)
+         }
+      })
+   }
+
+   private fun showLoading(isLoading: Boolean) {
+      binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
    }
 }

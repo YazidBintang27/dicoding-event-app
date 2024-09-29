@@ -19,5 +19,5 @@ interface ApiService {
    fun getDetailEventById(@Path("id") id: Int): Call<DetailEventModel>
 
    @GET(ApiConstant.SEARCH_ENDPOINT)
-   fun getSearchEventByKeyword(@Query("keyword") keyword: String): Call<ListEventsModel>
+   fun getSearchEventByKeyword(@Query("q") keyword: String): Call<ListEventsModel>
 }
