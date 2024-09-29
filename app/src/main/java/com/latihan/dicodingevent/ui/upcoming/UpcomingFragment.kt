@@ -26,10 +26,6 @@ class UpcomingFragment : Fragment() {
    private val upcomingViewModel: UpcomingViewModel by viewModels()
    private lateinit var navController: NavController
 
-   override fun onCreate(savedInstanceState: Bundle?) {
-      super.onCreate(savedInstanceState)
-   }
-
    override fun onCreateView(
       inflater: LayoutInflater, container: ViewGroup?,
       savedInstanceState: Bundle?

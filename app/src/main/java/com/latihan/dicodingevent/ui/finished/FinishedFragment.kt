@@ -26,10 +26,6 @@ class FinishedFragment : Fragment() {
    private val finishedEventAdapter: FinishedEventAdapter by lazy { FinishedEventAdapter() }
    private lateinit var navController: NavController
 
-   override fun onCreate(savedInstanceState: Bundle?) {
-      super.onCreate(savedInstanceState)
-   }
-
    override fun onCreateView(
       inflater: LayoutInflater, container: ViewGroup?,
       savedInstanceState: Bundle?

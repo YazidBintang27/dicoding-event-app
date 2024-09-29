@@ -1,11 +1,11 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">Dicoding Event</string>
     <string name="title_home">Home</string>
     <string name="title_search">Search</string>
     <string name="title_upcoming">Upcoming</string>
     <string name="title_finished">Finished</string>
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="hello_blank_fragment" tools:keep="@string/hello_blank_fragment">Hello blank fragment</string>
     <string name="upcoming_events">Upcoming events</string>
     <string name="finished_events">Finished events</string>
     <string name="owner_text">Diselenggarakan oleh: %1$s</string>
@@ -18,7 +18,7 @@
     <string name="location">Lokasi: %1$s</string>
     <string name="register">Register</string>
     <string name="search_event">Search event</string>
-    <string name="recommended_for_you">Recommended for you</string>
+    <string name="recommended_for_you" tools:keep="@string/recommended_for_you">Recommended for you</string>
     <string name="top_results">Top results</string>
     <string name="no_data">No data</string>
 </resources>

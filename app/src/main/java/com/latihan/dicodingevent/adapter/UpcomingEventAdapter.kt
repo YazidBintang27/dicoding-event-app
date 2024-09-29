@@ -39,7 +39,7 @@ class UpcomingEventAdapter: RecyclerView.Adapter<UpcomingEventAdapter.ViewHolder
    override fun onCreateViewHolder(
       parent: ViewGroup,
       viewType: Int
-   ): UpcomingEventAdapter.ViewHolder {
+   ): ViewHolder {
       val layoutInflater = LayoutInflater.from(parent.context)
       val binding = EventCardVerticalBinding.inflate(layoutInflater, parent, false)
       return ViewHolder(binding)
@@ -49,7 +49,7 @@ class UpcomingEventAdapter: RecyclerView.Adapter<UpcomingEventAdapter.ViewHolder
       return upcomingEventData?.size ?: 0
    }
 
-   override fun onBindViewHolder(holder: UpcomingEventAdapter.ViewHolder, position: Int) {
+   override fun onBindViewHolder(holder: ViewHolder, position: Int) {
       holder.bind(upcomingEventData?.get(position))
       holder.itemView.setOnClickListener {
          onItemClickCallback.onItemClicked(upcomingEventData?.get(position)?.id ?: 0)
