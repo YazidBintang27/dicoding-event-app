@@ -39,4 +39,19 @@ class MainActivity : AppCompatActivity() {
       }
       navView.setupWithNavController(navController)
    }
+
+   @Deprecated("Deprecated in Java")
+   override fun onBackPressed() {
+      val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment_activity_main) as NavHostFragment
+      val currentFragmentId = navHostFragment.navController.currentDestination?.id
+
+      if (currentFragmentId == R.id.homeFragment ||
+         currentFragmentId == R.id.searchFragment ||
+         currentFragmentId == R.id.upcomingFragment ||
+         currentFragmentId == R.id.finishedFragment) {
+         finish()
+      } else {
+         super.onBackPressed()
+      }
+   }
 }
