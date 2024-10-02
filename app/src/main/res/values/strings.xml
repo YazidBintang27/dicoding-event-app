@@ -21,4 +21,6 @@
     <string name="recommended_for_you" tools:keep="@string/recommended_for_you">Recommended for you</string>
     <string name="top_results">Top results</string>
     <string name="no_data">No data</string>
+    <string name="favourite">Favourite</string>
+    <string name="favourite_events">Favourite Events</string>
 </resources>

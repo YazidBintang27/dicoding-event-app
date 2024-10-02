@@ -1,4 +1,4 @@
-package com.latihan.dicodingevent.util
+package com.latihan.dicodingevent.utils
 
 object ApiConstant {
    const val BASE_URL = "https://event-api.dicoding.dev"

@@ -1,17 +1,17 @@
-package com.latihan.dicodingevent.models
+package com.latihan.dicodingevent.data.remote.models
 
 
 import com.google.gson.annotations.SerializedName
 
-data class ListEventsModel(
+data class DetailEventModel(
     @SerializedName("error")
     val error: Boolean?,
-    @SerializedName("listEvents")
-    val listEvents: List<Events?>?,
+    @SerializedName("event")
+    val event: Event?,
     @SerializedName("message")
     val message: String?
 ) {
-    data class Events(
+    data class Event(
         @SerializedName("beginTime")
         val beginTime: String?,
         @SerializedName("category")

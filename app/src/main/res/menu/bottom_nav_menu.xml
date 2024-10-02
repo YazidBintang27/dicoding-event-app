@@ -13,6 +13,11 @@
         android:title="@string/title_search" />
 
     <item
+        android:id="@+id/favouriteFragment"
+        android:icon="@drawable/favourite_stroke_rounded"
+        android:title="@string/favourite"/>
+
+    <item
         android:id="@+id/upcomingFragment"
         android:icon="@drawable/clock_04_stroke_rounded"
         android:title="@string/title_upcoming" />

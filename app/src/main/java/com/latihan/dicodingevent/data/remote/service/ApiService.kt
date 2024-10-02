@@ -1,8 +1,8 @@
-package com.latihan.dicodingevent.service
+package com.latihan.dicodingevent.data.remote.service
 
-import com.latihan.dicodingevent.models.DetailEventModel
-import com.latihan.dicodingevent.models.ListEventsModel
-import com.latihan.dicodingevent.util.ApiConstant
+import com.latihan.dicodingevent.data.remote.models.DetailEventModel
+import com.latihan.dicodingevent.data.remote.models.ListEventsModel
+import com.latihan.dicodingevent.utils.ApiConstant
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Path

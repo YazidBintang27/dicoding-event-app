@@ -4,8 +4,8 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.latihan.dicodingevent.models.DetailEventModel
-import com.latihan.dicodingevent.repository.Repository
+import com.latihan.dicodingevent.data.remote.models.DetailEventModel
+import com.latihan.dicodingevent.data.remote.repository.Repository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import retrofit2.Call
 import retrofit2.Callback

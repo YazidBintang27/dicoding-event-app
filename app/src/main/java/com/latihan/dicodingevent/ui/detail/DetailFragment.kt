@@ -16,7 +16,7 @@ import com.bumptech.glide.Glide
 import com.google.android.material.snackbar.Snackbar
 import com.latihan.dicodingevent.R
 import com.latihan.dicodingevent.databinding.FragmentDetailBinding
-import com.latihan.dicodingevent.util.NetworkUtils
+import com.latihan.dicodingevent.utils.NetworkUtils
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

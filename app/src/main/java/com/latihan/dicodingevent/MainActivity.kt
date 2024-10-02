@@ -30,7 +30,8 @@ class MainActivity : AppCompatActivity() {
       val navController = navHostFragment.navController
       navController.addOnDestinationChangedListener { _, destination, _ ->
          when (destination.id) {
-            R.id.homeFragment, R.id.searchFragment, R.id.upcomingFragment, R.id.finishedFragment
+            R.id.homeFragment, R.id.searchFragment, R.id.upcomingFragment, R.id.finishedFragment,
+            R.id.favouriteFragment
             -> {
                navView.visibility = View.VISIBLE
             }

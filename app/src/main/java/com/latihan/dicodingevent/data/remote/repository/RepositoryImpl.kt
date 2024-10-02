@@ -1,8 +1,8 @@
-package com.latihan.dicodingevent.repository
+package com.latihan.dicodingevent.data.remote.repository
 
-import com.latihan.dicodingevent.models.DetailEventModel
-import com.latihan.dicodingevent.models.ListEventsModel
-import com.latihan.dicodingevent.service.ApiService
+import com.latihan.dicodingevent.data.remote.models.DetailEventModel
+import com.latihan.dicodingevent.data.remote.models.ListEventsModel
+import com.latihan.dicodingevent.data.remote.service.ApiService
 import retrofit2.Call
 import javax.inject.Inject
 

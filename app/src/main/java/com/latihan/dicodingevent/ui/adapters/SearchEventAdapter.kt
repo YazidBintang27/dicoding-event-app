@@ -1,4 +1,4 @@
-package com.latihan.dicodingevent.adapter
+package com.latihan.dicodingevent.ui.adapters
 
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.latihan.dicodingevent.R
 import com.latihan.dicodingevent.databinding.EventCardVerticalBinding
-import com.latihan.dicodingevent.models.ListEventsModel
+import com.latihan.dicodingevent.data.remote.models.ListEventsModel
 
 class SearchEventAdapter: RecyclerView.Adapter<SearchEventAdapter.ViewHolder>() {
 

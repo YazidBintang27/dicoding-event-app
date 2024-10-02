@@ -1,7 +1,7 @@
-package com.latihan.dicodingevent.repository
+package com.latihan.dicodingevent.data.remote.repository
 
-import com.latihan.dicodingevent.models.DetailEventModel
-import com.latihan.dicodingevent.models.ListEventsModel
+import com.latihan.dicodingevent.data.remote.models.DetailEventModel
+import com.latihan.dicodingevent.data.remote.models.ListEventsModel
 import retrofit2.Call
 
 interface Repository {

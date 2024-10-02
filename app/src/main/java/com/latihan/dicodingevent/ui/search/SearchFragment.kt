@@ -13,10 +13,10 @@ import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
-import com.latihan.dicodingevent.adapter.SearchEventAdapter
-import com.latihan.dicodingevent.adapter.SearchEventAdapter.OnItemClickCallback
+import com.latihan.dicodingevent.ui.adapters.SearchEventAdapter
+import com.latihan.dicodingevent.ui.adapters.SearchEventAdapter.OnItemClickCallback
 import com.latihan.dicodingevent.databinding.FragmentSearchBinding
-import com.latihan.dicodingevent.util.NetworkUtils
+import com.latihan.dicodingevent.utils.NetworkUtils
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

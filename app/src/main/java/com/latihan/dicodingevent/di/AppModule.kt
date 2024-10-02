@@ -1,7 +1,7 @@
 package com.latihan.dicodingevent.di
 
-import com.latihan.dicodingevent.service.ApiService
-import com.latihan.dicodingevent.util.ApiConstant
+import com.latihan.dicodingevent.data.remote.service.ApiService
+import com.latihan.dicodingevent.utils.ApiConstant
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

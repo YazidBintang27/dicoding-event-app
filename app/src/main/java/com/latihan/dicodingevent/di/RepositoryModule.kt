@@ -1,7 +1,7 @@
 package com.latihan.dicodingevent.di
 
-import com.latihan.dicodingevent.repository.Repository
-import com.latihan.dicodingevent.repository.RepositoryImpl
+import com.latihan.dicodingevent.data.remote.repository.Repository
+import com.latihan.dicodingevent.data.remote.repository.RepositoryImpl
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn

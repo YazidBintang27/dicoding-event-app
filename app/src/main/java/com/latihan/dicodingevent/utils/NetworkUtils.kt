@@ -1,4 +1,4 @@
-package com.latihan.dicodingevent.util
+package com.latihan.dicodingevent.utils
 
 import android.content.Context
 import android.net.ConnectivityManager

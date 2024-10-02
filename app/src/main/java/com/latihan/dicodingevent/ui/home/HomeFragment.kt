@@ -12,12 +12,12 @@ import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
-import com.latihan.dicodingevent.adapter.FinishedEventAdapter
-import com.latihan.dicodingevent.adapter.FinishedEventAdapter.OnItemClickCallback
-import com.latihan.dicodingevent.adapter.UpcomingEventCarouselAdapter
-import com.latihan.dicodingevent.adapter.UpcomingEventCarouselAdapter.OnUpcomingItemClickCallback
+import com.latihan.dicodingevent.ui.adapters.FinishedEventAdapter
+import com.latihan.dicodingevent.ui.adapters.FinishedEventAdapter.OnItemClickCallback
+import com.latihan.dicodingevent.ui.adapters.UpcomingEventCarouselAdapter
+import com.latihan.dicodingevent.ui.adapters.UpcomingEventCarouselAdapter.OnUpcomingItemClickCallback
 import com.latihan.dicodingevent.databinding.FragmentHomeBinding
-import com.latihan.dicodingevent.util.NetworkUtils
+import com.latihan.dicodingevent.utils.NetworkUtils
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
