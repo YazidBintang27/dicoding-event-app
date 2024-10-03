@@ -83,4 +83,15 @@ dependencies {
    implementation(libs.androidx.lifecycle.livedata.ktx.v286)
    implementation(libs.androidx.lifecycle.runtime.ktx)
 
+   // DataStore
+   implementation(libs.androidx.datastore.preferences)
+
+   // Coroutines
+   implementation (libs.kotlinx.coroutines.android)
+
+   //Room Database
+   implementation(libs.androidx.room.runtime)
+   ksp(libs.androidx.room.compiler)
+   implementation(libs.androidx.room.ktx)
+
 }
