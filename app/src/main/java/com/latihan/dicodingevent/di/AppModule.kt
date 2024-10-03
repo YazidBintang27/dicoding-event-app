@@ -1,5 +1,9 @@
 package com.latihan.dicodingevent.di
 
+import android.app.Application
+import androidx.room.Room
+import com.latihan.dicodingevent.data.local.room.EventDatabase
+import com.latihan.dicodingevent.data.local.room.FavouriteEventDao
 import com.latihan.dicodingevent.data.remote.service.ApiService
 import com.latihan.dicodingevent.utils.ApiConstant
 import dagger.Module
@@ -27,5 +31,21 @@ object AppModule {
    @Singleton
    fun provideService(retrofit: Retrofit): ApiService {
       return retrofit.create(ApiService::class.java)
+   }
+
+   @Provides
+   @Singleton
+   fun provideDatabase(app: Application): EventDatabase {
+      return Room.databaseBuilder(
+         app,
+         EventDatabase::class.java,
+         "event_db"
+      ).build()
+   }
+
+   @Provides
+   @Singleton
+   fun provideDao(db: EventDatabase): FavouriteEventDao {
+      return db.dao
    }
 }
