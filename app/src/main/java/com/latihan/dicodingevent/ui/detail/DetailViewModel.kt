@@ -4,9 +4,12 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.latihan.dicodingevent.data.remote.models.DetailEventModel
 import com.latihan.dicodingevent.data.remote.repository.Repository
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -23,19 +26,15 @@ class DetailViewModel @Inject constructor(
    val detailEventModel: LiveData<DetailEventModel.Event?> = _detailEventData
 
    fun getEventById(id: Int) {
-      _isLoading.value = true
-      repository.requestDetailEvent(id).enqueue(object: Callback<DetailEventModel> {
-         override fun onResponse(
-            call: Call<DetailEventModel>,
-            response: Response<DetailEventModel>
-         ) {
+      viewModelScope.launch {
+         _isLoading.value = true
+         try {
+            val response = repository.requestDetailEvent(id).event
+            _detailEventData.value = response
             _isLoading.value = false
-            _detailEventData.value = response.body()?.event
+         } catch (e: Exception) {
+            Log.e("HomeViewModel", "Error")
          }
-
-         override fun onFailure(call: Call<DetailEventModel>, t: Throwable) {
-            Log.e("DetailViewModel", "On Failure: ${t.message}")
-         }
-      })
+      }
    }
 }

@@ -4,9 +4,12 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.latihan.dicodingevent.data.remote.models.ListEventsModel
 import com.latihan.dicodingevent.data.remote.repository.Repository
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -23,20 +26,15 @@ class SearchViewModel @Inject constructor(
    val searchEventData: LiveData<List<ListEventsModel.Events?>?> = _searchEventData
 
    fun searchData(keyword: String) {
-      _isLoading.value = true
-      repository.requestSearchEvent(keyword).enqueue(object: Callback<ListEventsModel> {
-         override fun onResponse(call: Call<ListEventsModel>, response: Response<ListEventsModel>) {
-            if (response.isSuccessful) {
-               _searchEventData.value = response.body()?.listEvents
-            } else {
-               Log.e("SearchViewModel", "On Failure: ${response.message()}")
-            }
+      viewModelScope.launch {
+         _isLoading.value = true
+         try {
+            val response = repository.requestSearchEvent(keyword).listEvents
+            _searchEventData.value = response
             _isLoading.value = false
+         } catch (e: Exception) {
+            Log.e("HomeViewModel", "Error")
          }
-
-         override fun onFailure(call: Call<ListEventsModel>, t: Throwable) {
-            Log.e("SearchViewModel", "On Failure: ${t.message}")
-         }
-      })
+      }
    }
 }

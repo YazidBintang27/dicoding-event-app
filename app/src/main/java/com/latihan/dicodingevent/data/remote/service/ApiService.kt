@@ -10,14 +10,14 @@ import retrofit2.http.Query
 
 interface ApiService {
    @GET(ApiConstant.UPCOMING_ENDPOINT)
-   fun getUpcomingEventList(): Call<ListEventsModel>
+   suspend fun getUpcomingEventList(): ListEventsModel
 
    @GET(ApiConstant.FINISHED_ENDPOINT)
-   fun getFinishedEventList(): Call<ListEventsModel>
+   suspend fun getFinishedEventList(): ListEventsModel
 
    @GET(ApiConstant.DETAIL_ENDPOINT)
-   fun getDetailEventById(@Path("id") id: Int): Call<DetailEventModel>
+   suspend fun getDetailEventById(@Path("id") id: Int): DetailEventModel
 
    @GET(ApiConstant.SEARCH_ENDPOINT)
-   fun getSearchEventByKeyword(@Query("q") keyword: String): Call<ListEventsModel>
+   suspend fun getSearchEventByKeyword(@Query("q") keyword: String): ListEventsModel
 }

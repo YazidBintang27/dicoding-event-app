@@ -4,9 +4,12 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.latihan.dicodingevent.data.remote.models.ListEventsModel
 import com.latihan.dicodingevent.data.remote.repository.Repository
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -31,39 +34,28 @@ class HomeViewModel @Inject constructor(
    }
 
    private fun getUpcomingEvent() {
-      _isLoading.value = true
-      repository.requestUpcomingEvent().enqueue(object: Callback<ListEventsModel> {
-         override fun onResponse(call: Call<ListEventsModel>, response: Response<ListEventsModel>) {
+      viewModelScope.launch {
+         _isLoading.value = true
+         try {
+            val response = repository.requestUpcomingEvent().listEvents
+            _upcomingEventData.value = response
             _isLoading.value = false
-            if (response.isSuccessful) {
-               _upcomingEventData.value = response.body()?.listEvents?.take(5)
-            } else {
-               Log.e("MainViewModel", "On Failure: ${response.message()}")
-            }
+         } catch (e: Exception) {
+            Log.e("HomeViewModel", "Error")
          }
-
-         override fun onFailure(call: Call<ListEventsModel>, t: Throwable) {
-            _isLoading.value = false
-            Log.e("MainViewModel", "On Failure: ${t.message}")
-         }
-      })
+      }
    }
 
    private fun getFinishedEvent() {
-      _isLoading.value = true
-      repository.requestFinishedEvent().enqueue(object: Callback<ListEventsModel> {
-         override fun onResponse(call: Call<ListEventsModel>, response: Response<ListEventsModel>) {
+      viewModelScope.launch {
+         _isLoading.value = true
+         try {
+            val response = repository.requestFinishedEvent().listEvents
+            _finishedEventData.value = response
             _isLoading.value = false
-            if (response.isSuccessful) {
-               _finishedEventData.value = response.body()?.listEvents?.take(5)
-            } else {
-               Log.e("MainViewModel", "On Failure: ${response.message()}")
-            }
+         } catch (e: Exception) {
+            Log.e("HomeViewModel", "Error")
          }
-
-         override fun onFailure(call: Call<ListEventsModel>, t: Throwable) {
-            Log.e("MainViewModel", "On Failure: ${t.message}")
-         }
-      })
+      }
    }
 }

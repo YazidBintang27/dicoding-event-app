@@ -9,19 +9,19 @@ import javax.inject.Inject
 class RepositoryImpl @Inject constructor(
    private val apiService: ApiService
 ): Repository {
-   override fun requestUpcomingEvent(): Call<ListEventsModel> {
+   override suspend fun requestUpcomingEvent(): ListEventsModel {
       return apiService.getUpcomingEventList()
    }
 
-   override fun requestFinishedEvent(): Call<ListEventsModel> {
+   override suspend fun requestFinishedEvent(): ListEventsModel {
       return apiService.getFinishedEventList()
    }
 
-   override fun requestSearchEvent(keyword: String): Call<ListEventsModel> {
+   override suspend fun requestSearchEvent(keyword: String): ListEventsModel {
       return apiService.getSearchEventByKeyword(keyword)
    }
 
-   override fun requestDetailEvent(id: Int): Call<DetailEventModel> {
+   override suspend fun requestDetailEvent(id: Int): DetailEventModel {
       return apiService.getDetailEventById(id)
    }
 

@@ -5,11 +5,11 @@ import com.latihan.dicodingevent.data.remote.models.ListEventsModel
 import retrofit2.Call
 
 interface Repository {
-   fun requestUpcomingEvent(): Call<ListEventsModel>
+   suspend fun requestUpcomingEvent(): ListEventsModel
 
-   fun requestFinishedEvent(): Call<ListEventsModel>
+   suspend fun requestFinishedEvent(): ListEventsModel
 
-   fun requestSearchEvent(keyword: String): Call<ListEventsModel>
+   suspend fun requestSearchEvent(keyword: String): ListEventsModel
 
-   fun requestDetailEvent(id: Int): Call<DetailEventModel>
+   suspend fun requestDetailEvent(id: Int): DetailEventModel
 }
