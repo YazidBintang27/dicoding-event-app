@@ -12,6 +12,7 @@ import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
+import com.latihan.dicodingevent.R
 import com.latihan.dicodingevent.ui.adapters.UpcomingEventAdapter
 import com.latihan.dicodingevent.ui.adapters.UpcomingEventAdapter.OnItemClickCallback
 import com.latihan.dicodingevent.databinding.FragmentUpcomingBinding
@@ -41,6 +42,7 @@ class UpcomingFragment : Fragment() {
       observeLoadingState()
       observeUpcomingEvent()
       navigateToDetail()
+      navigateToSetting()
       if (!NetworkUtils.isNetworkAvailable(requireContext())) {
          showNoInternetWarning(view)
          return
@@ -92,5 +94,11 @@ class UpcomingFragment : Fragment() {
                Snackbar.make(view, "Still no internet connection", Snackbar.LENGTH_SHORT).show()
             }
          }.show()
+   }
+
+   private fun navigateToSetting() {
+      binding.icSetting.setOnClickListener {
+         navController.navigate(R.id.action_upcomingFragment_to_settingFragment)
+      }
    }
 }

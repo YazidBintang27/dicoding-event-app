@@ -42,6 +42,7 @@ class DetailFragment : Fragment() {
       binding.myToolbar.setNavigationOnClickListener {
          navController.navigateUp()
       }
+      navigateToSetting()
       observeLoadingState()
       val id = DetailFragmentArgs.fromBundle(arguments as Bundle).id
       observeDetailEvent(id)
@@ -107,5 +108,11 @@ class DetailFragment : Fragment() {
                Snackbar.make(view, "Still no internet connection", Snackbar.LENGTH_SHORT).show()
             }
          }.show()
+   }
+
+   private fun navigateToSetting() {
+      binding.icSetting.setOnClickListener {
+         navController.navigate(R.id.action_detailFragment_to_settingFragment)
+      }
    }
 }

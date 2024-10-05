@@ -3,9 +3,12 @@
     <color name="black" tools:keep="@color/black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="primary_color">#2D3E50</color>
-    <color name="background_color">#F4F4F4</color>
-    <color name="grey_on_background">#262626</color>
+    <color name="light_background_color">#F4F4F4</color>
+    <color name="grey_on_light_background">#262626</color>
     <color name="indicator_color">#59FFFFFF</color>
     <color name="transparent" tools:keep="@color/transparent">#00000000</color>
     <color name="search_view_color">#DDDDDD</color>
+    <color name="red">#FF5858</color>
+    <color name="favourite_card_color">#234A4A4A</color>
+    <color name="dark_background_color">#222222</color>
 </resources>

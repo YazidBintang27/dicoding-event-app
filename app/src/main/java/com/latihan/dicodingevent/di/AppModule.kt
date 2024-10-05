@@ -1,7 +1,9 @@
 package com.latihan.dicodingevent.di
 
 import android.app.Application
+import android.content.Context
 import androidx.room.Room
+import com.latihan.dicodingevent.data.local.datastore.ThemePreferences
 import com.latihan.dicodingevent.data.local.room.EventDatabase
 import com.latihan.dicodingevent.data.local.room.FavouriteEventDao
 import com.latihan.dicodingevent.data.remote.service.ApiService
@@ -9,6 +11,7 @@ import com.latihan.dicodingevent.utils.ApiConstant
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -47,5 +50,11 @@ object AppModule {
    @Singleton
    fun provideDao(db: EventDatabase): FavouriteEventDao {
       return db.dao
+   }
+
+   @Provides
+   @Singleton
+   fun provideThemePreferences(@ApplicationContext context: Context): ThemePreferences {
+      return ThemePreferences(context)
    }
 }

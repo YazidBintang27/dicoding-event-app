@@ -21,6 +21,9 @@
         <action
             android:id="@+id/action_upcomingFragment_to_detailFragment"
             app:destination="@id/detailFragment" />
+        <action
+            android:id="@+id/action_upcomingFragment_to_settingFragment"
+            app:destination="@id/settingFragment" />
     </fragment>
     <fragment
         android:id="@+id/finishedFragment"
@@ -30,6 +33,9 @@
         <action
             android:id="@+id/action_finishedFragment_to_detailFragment"
             app:destination="@id/detailFragment" />
+        <action
+            android:id="@+id/action_finishedFragment_to_settingFragment"
+            app:destination="@id/settingFragment" />
     </fragment>
     <fragment
         android:id="@+id/detailFragment"
@@ -40,6 +46,9 @@
             android:name="id"
             android:defaultValue="8722"
             app:argType="integer" />
+        <action
+            android:id="@+id/action_detailFragment_to_settingFragment"
+            app:destination="@id/settingFragment" />
     </fragment>
     <fragment
         android:id="@+id/homeFragment"
@@ -49,6 +58,9 @@
         <action
             android:id="@+id/action_homeFragment_to_detailFragment"
             app:destination="@id/detailFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_settingFragment"
+            app:destination="@id/settingFragment" />
     </fragment>
     <fragment
         android:id="@+id/splashFragment"
@@ -70,5 +82,13 @@
         <action
             android:id="@+id/action_favouriteFragment_to_detailFragment"
             app:destination="@id/detailFragment" />
+        <action
+            android:id="@+id/action_favouriteFragment_to_settingFragment"
+            app:destination="@id/settingFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/settingFragment"
+        android:name="com.latihan.dicodingevent.ui.setting.SettingFragment"
+        android:label="fragment_setting"
+        tools:layout="@layout/fragment_setting" />
 </navigation>
