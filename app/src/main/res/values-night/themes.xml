@@ -7,7 +7,7 @@
         <item name="android:colorBackground">@color/dark_background_color</item>
         <item name="android:textColor">@color/white</item>
         <item name="backgroundTint">@color/white</item>
-        <item name="colorSurfaceContainerHigh">@color/search_view_color</item>
+        <item name="colorSurfaceContainerHigh">@color/search_view_color_dark</item>
         <item name="colorOnBackground">@color/white</item>
         <!-- Customize your theme here. -->
     </style>
