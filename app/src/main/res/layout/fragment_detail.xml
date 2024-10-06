@@ -66,6 +66,10 @@
                 android:layout_marginBottom="12dp"
                 app:cardCornerRadius="12dp">
 
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
                 <ImageView
                     android:id="@+id/iv_image_cover"
                     android:layout_width="match_parent"
@@ -74,6 +78,30 @@
                     tools:src="@drawable/noimage"
                     android:scaleType="centerCrop"
                     tools:ignore="HardcodedText" />
+
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:cardCornerRadius="50dp"
+                        android:layout_margin="8dp"
+                        app:cardElevation="0dp"
+                        android:layout_gravity="end|bottom"
+                        android:backgroundTint="@color/favourite_card_color">
+
+                        <ImageView
+                            android:id="@+id/ic_favourite"
+                            android:layout_width="28dp"
+                            android:layout_height="28dp"
+                            android:layout_margin="8dp"
+                            android:contentDescription="Icon favourite"
+                            tools:src="@drawable/favourite_stroke_rounded"
+                            app:tint="@color/red"
+                            tools:ignore="HardcodedText" />
+
+                    </androidx.cardview.widget.CardView>
+
+                </FrameLayout>
+
 
             </androidx.cardview.widget.CardView>
 

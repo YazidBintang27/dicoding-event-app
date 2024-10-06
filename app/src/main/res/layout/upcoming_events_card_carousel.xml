@@ -44,7 +44,7 @@
                     android:layout_height="24dp"
                     android:layout_margin="8dp"
                     android:contentDescription="Icon favourite"
-                    android:src="@drawable/favourite_stroke_rounded"
+                    tools:src="@drawable/favourite_stroke_rounded"
                     app:tint="@color/red"
                     tools:ignore="HardcodedText" />
 

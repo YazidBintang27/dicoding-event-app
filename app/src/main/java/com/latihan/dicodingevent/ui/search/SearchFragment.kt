@@ -13,9 +13,11 @@ import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
+import com.latihan.dicodingevent.data.local.entity.FavouriteEventEntity
 import com.latihan.dicodingevent.ui.adapters.SearchEventAdapter
 import com.latihan.dicodingevent.ui.adapters.SearchEventAdapter.OnItemClickCallback
 import com.latihan.dicodingevent.databinding.FragmentSearchBinding
+import com.latihan.dicodingevent.ui.adapters.SearchEventAdapter.OnFavouriteClickCallback
 import com.latihan.dicodingevent.utils.NetworkUtils
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -41,6 +43,8 @@ class SearchFragment : Fragment() {
       navController = Navigation.findNavController(view)
       navigateToDetail()
       observeSearchEvent()
+      observeFavouriteEvent()
+      addOrDeleteFavourite()
       if (!NetworkUtils.isNetworkAvailable(requireContext())) {
          showNoInternetWarning(view)
          return
@@ -119,5 +123,27 @@ class SearchFragment : Fragment() {
                Snackbar.make(view, "Still no internet connection", Snackbar.LENGTH_SHORT).show()
             }
          }.show()
+   }
+
+   private fun addOrDeleteFavourite() {
+      searchEventAdapter.setOnFavouriteClickCallback(object: OnFavouriteClickCallback {
+         override fun onFavouriteClicked(
+            isFavourite: Boolean,
+            favouriteEventEntity: FavouriteEventEntity
+         ) {
+            if (isFavourite) {
+               searchViewModel.addFavouriteEvent(favouriteEventEntity)
+            } else {
+               searchViewModel.deleteFavouriteEvent(favouriteEventEntity)
+            }
+         }
+      })
+   }
+
+   private fun observeFavouriteEvent() {
+      searchViewModel.favouriteEventData.observe(viewLifecycleOwner) { response ->
+         Log.d("SearchFragment", "$response")
+         searchEventAdapter.setFavouriteData(response)
+      }
    }
 }

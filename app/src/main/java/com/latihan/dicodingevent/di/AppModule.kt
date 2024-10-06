@@ -43,7 +43,7 @@ object AppModule {
          app,
          EventDatabase::class.java,
          "event_db"
-      ).build()
+      ).fallbackToDestructiveMigration().build()
    }
 
    @Provides

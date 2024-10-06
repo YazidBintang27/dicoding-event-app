@@ -8,17 +8,20 @@ import androidx.room.PrimaryKey
 data class FavouriteEventEntity(
    @PrimaryKey(autoGenerate = false)
    @ColumnInfo(name = "id")
-   var id: Int = 0,
+   var id: Int? = 0,
 
    @ColumnInfo(name = "name")
-   var name: String = "",
+   var name: String? = "",
 
    @ColumnInfo(name = "owner_name")
-   var ownerName: String = "",
+   var ownerName: String? = "",
 
    @ColumnInfo(name = "category")
-   var category: String = "",
+   var category: String? = "",
 
    @ColumnInfo(name = "image_logo")
-   var imageLogo: String = ""
+   var imageLogo: String? = "",
+
+   @ColumnInfo(name = "is_favourite")
+   var isFavourite: Boolean = true
 )

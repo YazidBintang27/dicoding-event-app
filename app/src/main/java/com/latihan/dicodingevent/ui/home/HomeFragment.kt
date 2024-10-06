@@ -13,9 +13,11 @@ import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import com.latihan.dicodingevent.R
+import com.latihan.dicodingevent.data.local.entity.FavouriteEventEntity
 import com.latihan.dicodingevent.ui.adapters.FinishedEventAdapter
 import com.latihan.dicodingevent.ui.adapters.FinishedEventAdapter.OnItemClickCallback
 import com.latihan.dicodingevent.ui.adapters.UpcomingEventCarouselAdapter
+import com.latihan.dicodingevent.ui.adapters.UpcomingEventCarouselAdapter.OnFavouriteClickCallback
 import com.latihan.dicodingevent.ui.adapters.UpcomingEventCarouselAdapter.OnUpcomingItemClickCallback
 import com.latihan.dicodingevent.databinding.FragmentHomeBinding
 import com.latihan.dicodingevent.utils.NetworkUtils
@@ -41,10 +43,13 @@ class HomeFragment : Fragment() {
       super.onViewCreated(view, savedInstanceState)
       navController = Navigation.findNavController(view)
       observeLoadingState()
+      observeFavouriteEvent()
       observeUpcomingEvent()
       observeFinishedEvent()
       navigateToDetail()
       navigateToSetting()
+      addOrDeleteFavouriteCarousel()
+      addOrDeleteFavourite()
       if (!NetworkUtils.isNetworkAvailable(requireContext())) {
          showNoInternetWarning(view)
          with (binding) {
@@ -72,8 +77,8 @@ class HomeFragment : Fragment() {
             adapter = finishedEventAdapter
             setHasFixedSize(true)
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
-            finishedEventAdapter.setData(response)
          }
+         finishedEventAdapter.setData(response)
       }
    }
 
@@ -130,6 +135,44 @@ class HomeFragment : Fragment() {
    private fun navigateToSetting() {
       binding.icSetting.setOnClickListener {
          navController.navigate(R.id.action_homeFragment_to_settingFragment)
+      }
+   }
+
+   private fun addOrDeleteFavouriteCarousel() {
+      upcomingEventCarouselAdapter.setOnFavouriteClickCallback(object: OnFavouriteClickCallback {
+         override fun onFavouriteClicked(
+            isFavourite: Boolean,
+            favouriteEventEntity: FavouriteEventEntity
+         ) {
+            if (isFavourite) {
+               homeViewModel.addFavouriteEvent(favouriteEventEntity)
+            } else {
+               homeViewModel.deleteFavouriteEvent(favouriteEventEntity)
+            }
+         }
+      })
+   }
+
+   private fun addOrDeleteFavourite() {
+      finishedEventAdapter.setOnFavouriteClickCallback(object: FinishedEventAdapter.OnFavouriteClickCallback {
+         override fun onFavouriteClicked(
+            isFavourite: Boolean,
+            favouriteEventEntity: FavouriteEventEntity
+         ) {
+            if (isFavourite) {
+               homeViewModel.addFavouriteEvent(favouriteEventEntity)
+            } else {
+               homeViewModel.deleteFavouriteEvent(favouriteEventEntity)
+            }
+         }
+      })
+   }
+
+   private fun observeFavouriteEvent() {
+      homeViewModel.favouriteEventData.observe(viewLifecycleOwner) { response ->
+         Log.d("HomeFragment", "$response")
+         upcomingEventCarouselAdapter.setFavouriteData(response)
+         finishedEventAdapter.setFavouriteData(response)
       }
    }
 }

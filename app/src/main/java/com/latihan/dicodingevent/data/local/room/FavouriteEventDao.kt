@@ -7,6 +7,7 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
 import com.latihan.dicodingevent.data.local.entity.FavouriteEventEntity
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface FavouriteEventDao {
@@ -21,5 +22,8 @@ interface FavouriteEventDao {
    suspend fun deleteFavouriteEvent(favouriteEventEntity: FavouriteEventEntity)
 
    @Query("SELECT * FROM favourite_event")
-   suspend fun getAllFavouriteEvent(): List<FavouriteEventEntity>
+   fun getAllFavouriteEvent(): Flow<List<FavouriteEventEntity>>
+
+   @Query("SELECT id FROM favourite_event WHERE is_favourite = 1")
+   fun getAllFavouriteEventId(): Flow<List<Int>>
 }

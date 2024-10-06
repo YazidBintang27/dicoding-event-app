@@ -13,6 +13,7 @@ import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import com.latihan.dicodingevent.R
+import com.latihan.dicodingevent.data.local.entity.FavouriteEventEntity
 import com.latihan.dicodingevent.ui.adapters.FinishedEventAdapter
 import com.latihan.dicodingevent.ui.adapters.FinishedEventAdapter.OnItemClickCallback
 import com.latihan.dicodingevent.databinding.FragmentFinishedBinding
@@ -41,8 +42,10 @@ class FinishedFragment : Fragment() {
       navController = Navigation.findNavController(view)
       observeLoadingState()
       observeFinishedEvent()
+      observeFavouriteEvent()
       navigateToDetail()
       navigateToSetting()
+      addOrDeleteFavourite()
       if (!NetworkUtils.isNetworkAvailable(requireContext())) {
          showNoInternetWarning(view)
          return
@@ -99,6 +102,28 @@ class FinishedFragment : Fragment() {
    private fun navigateToSetting() {
       binding.icSetting.setOnClickListener {
          navController.navigate(R.id.action_finishedFragment_to_settingFragment)
+      }
+   }
+
+   private fun addOrDeleteFavourite() {
+      finishedEventAdapter.setOnFavouriteClickCallback(object: FinishedEventAdapter.OnFavouriteClickCallback {
+         override fun onFavouriteClicked(
+            isFavourite: Boolean,
+            favouriteEventEntity: FavouriteEventEntity
+         ) {
+            if (isFavourite) {
+               finishedViewModel.addFavouriteEvent(favouriteEventEntity)
+            } else {
+               finishedViewModel.deleteFavouriteEvent(favouriteEventEntity)
+            }
+         }
+      })
+   }
+
+   private fun observeFavouriteEvent() {
+      finishedViewModel.favouriteEventData.observe(viewLifecycleOwner) { response ->
+         Log.d("FinishedFragment", "$response")
+         finishedEventAdapter.setFavouriteData(response)
       }
    }
 }

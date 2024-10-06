@@ -4,20 +4,25 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.text.HtmlCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import com.bumptech.glide.Glide
 import com.google.android.material.snackbar.Snackbar
 import com.latihan.dicodingevent.R
+import com.latihan.dicodingevent.data.local.entity.FavouriteEventEntity
 import com.latihan.dicodingevent.databinding.FragmentDetailBinding
 import com.latihan.dicodingevent.utils.NetworkUtils
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class DetailFragment : Fragment() {
@@ -25,6 +30,7 @@ class DetailFragment : Fragment() {
    private lateinit var binding: FragmentDetailBinding
    private lateinit var navController: NavController
    private val detailViewModel: DetailViewModel by viewModels()
+   private var id = 1
 
    override fun onCreateView(
       inflater: LayoutInflater, container: ViewGroup?,
@@ -44,8 +50,9 @@ class DetailFragment : Fragment() {
       }
       navigateToSetting()
       observeLoadingState()
-      val id = DetailFragmentArgs.fromBundle(arguments as Bundle).id
+      id = DetailFragmentArgs.fromBundle(arguments as Bundle).id
       observeDetailEvent(id)
+      observeFavouriteEvent()
       if (!NetworkUtils.isNetworkAvailable(requireContext())) {
          showNoInternetWarning(view)
          return
@@ -54,7 +61,7 @@ class DetailFragment : Fragment() {
 
    private fun observeDetailEvent(id: Int) {
       detailViewModel.getEventById(id)
-      detailViewModel.detailEventModel.observe(viewLifecycleOwner) { response ->
+      detailViewModel.detailEventData.observe(viewLifecycleOwner) { response ->
          val quota: Int = response?.quota?.minus(response.registrants ?: 0) ?: 0
          register(response?.link)
          binding.apply {
@@ -113,6 +120,39 @@ class DetailFragment : Fragment() {
    private fun navigateToSetting() {
       binding.icSetting.setOnClickListener {
          navController.navigate(R.id.action_detailFragment_to_settingFragment)
+      }
+   }
+
+   private fun observeFavouriteEvent() {
+      val icFavourite = binding.icFavourite
+      var isFavourite: Boolean = false
+      detailViewModel.favouriteEventData.observe(viewLifecycleOwner) { response ->
+         isFavourite = response.contains(id)
+         val iconFavourite = if (isFavourite) {
+            R.drawable.favourite_fill_rounded
+         } else {
+            R.drawable.favourite_stroke_rounded
+         }
+         icFavourite.setImageResource(iconFavourite)
+      }
+      icFavourite.setOnClickListener {
+         isFavourite = !isFavourite
+         detailViewModel.detailEventData.observe(viewLifecycleOwner) { response ->
+            val favouriteEventEntity = FavouriteEventEntity(
+               id = id,
+               name = response?.name,
+               ownerName = response?.ownerName,
+               category = response?.category,
+               imageLogo = response?.imageLogo
+            )
+            if (isFavourite) {
+               icFavourite.setImageResource(R.drawable.favourite_stroke_rounded)
+               detailViewModel.deleteFavouriteEvent(favouriteEventEntity)
+            } else {
+               icFavourite.setImageResource(R.drawable.favourite_fill_rounded)
+               detailViewModel.addFavouriteEvent(favouriteEventEntity)
+            }
+         }
       }
    }
 }

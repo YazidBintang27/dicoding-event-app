@@ -13,8 +13,10 @@ import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import com.latihan.dicodingevent.R
+import com.latihan.dicodingevent.data.local.entity.FavouriteEventEntity
 import com.latihan.dicodingevent.ui.adapters.UpcomingEventAdapter
 import com.latihan.dicodingevent.ui.adapters.UpcomingEventAdapter.OnItemClickCallback
+import com.latihan.dicodingevent.ui.adapters.UpcomingEventAdapter.OnFavouriteClickCallback
 import com.latihan.dicodingevent.databinding.FragmentUpcomingBinding
 import com.latihan.dicodingevent.utils.NetworkUtils
 import dagger.hilt.android.AndroidEntryPoint
@@ -41,8 +43,10 @@ class UpcomingFragment : Fragment() {
       navController = Navigation.findNavController(view)
       observeLoadingState()
       observeUpcomingEvent()
+      observeFavouriteEvent()
       navigateToDetail()
       navigateToSetting()
+      addOrDeleteFavourite()
       if (!NetworkUtils.isNetworkAvailable(requireContext())) {
          showNoInternetWarning(view)
          return
@@ -99,6 +103,28 @@ class UpcomingFragment : Fragment() {
    private fun navigateToSetting() {
       binding.icSetting.setOnClickListener {
          navController.navigate(R.id.action_upcomingFragment_to_settingFragment)
+      }
+   }
+
+   private fun addOrDeleteFavourite() {
+      upcomingEventAdapter.setOnFavouriteClickCallback(object: OnFavouriteClickCallback {
+         override fun onFavouriteClicked(
+            isFavourite: Boolean,
+            favouriteEventEntity: FavouriteEventEntity
+         ) {
+            if (isFavourite) {
+               upcomingViewModel.addFavouriteEvent(favouriteEventEntity)
+            } else {
+               upcomingViewModel.deleteFavouriteEvent(favouriteEventEntity)
+            }
+         }
+      })
+   }
+
+   private fun observeFavouriteEvent() {
+      upcomingViewModel.favouriteEventData.observe(viewLifecycleOwner) { response ->
+         Log.d("UpcomingFragment", "$response")
+         upcomingEventAdapter.setFavouriteData(response)
       }
    }
 }
