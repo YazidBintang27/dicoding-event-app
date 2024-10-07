@@ -4,7 +4,6 @@ import com.latihan.dicodingevent.data.local.entity.FavouriteEventEntity
 import com.latihan.dicodingevent.data.remote.models.DetailEventModel
 import com.latihan.dicodingevent.data.remote.models.ListEventsModel
 import kotlinx.coroutines.flow.Flow
-import retrofit2.Call
 
 interface Repository {
    // API Methods

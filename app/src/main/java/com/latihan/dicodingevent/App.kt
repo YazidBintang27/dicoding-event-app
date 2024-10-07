@@ -2,7 +2,6 @@ package com.latihan.dicodingevent
 
 import android.app.Application
 import android.content.Context
-import androidx.hilt.work.HiltWorkerFactory
 import androidx.work.Configuration
 import androidx.work.ListenableWorker
 import androidx.work.WorkerFactory

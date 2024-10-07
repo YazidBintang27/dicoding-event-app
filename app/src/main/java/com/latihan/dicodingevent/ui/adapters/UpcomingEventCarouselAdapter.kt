@@ -1,15 +1,14 @@
 package com.latihan.dicodingevent.ui.adapters
 
 import android.annotation.SuppressLint
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.latihan.dicodingevent.R
 import com.latihan.dicodingevent.data.local.entity.FavouriteEventEntity
-import com.latihan.dicodingevent.databinding.UpcomingEventsCardCarouselBinding
 import com.latihan.dicodingevent.data.remote.models.ListEventsModel
+import com.latihan.dicodingevent.databinding.UpcomingEventsCardCarouselBinding
 
 class UpcomingEventCarouselAdapter: RecyclerView.Adapter<UpcomingEventCarouselAdapter.ViewHolder>() {
 

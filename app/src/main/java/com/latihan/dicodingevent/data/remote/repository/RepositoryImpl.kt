@@ -6,7 +6,6 @@ import com.latihan.dicodingevent.data.remote.models.DetailEventModel
 import com.latihan.dicodingevent.data.remote.models.ListEventsModel
 import com.latihan.dicodingevent.data.remote.service.ApiService
 import kotlinx.coroutines.flow.Flow
-import retrofit2.Call
 import javax.inject.Inject
 
 class RepositoryImpl @Inject constructor(

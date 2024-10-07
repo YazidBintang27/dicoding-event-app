@@ -28,10 +28,6 @@ class FavouriteFragment : Fragment() {
    private val favouriteViewModel: FavouriteViewModel by viewModels()
    private val favouriteEventAdapter: FavouriteEventAdapter by lazy { FavouriteEventAdapter() }
 
-   override fun onCreate(savedInstanceState: Bundle?) {
-      super.onCreate(savedInstanceState)
-   }
-
    override fun onCreateView(
       inflater: LayoutInflater, container: ViewGroup?,
       savedInstanceState: Bundle?

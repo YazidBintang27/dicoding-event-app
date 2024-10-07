@@ -7,8 +7,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.latihan.dicodingevent.R
 import com.latihan.dicodingevent.data.local.entity.FavouriteEventEntity
-import com.latihan.dicodingevent.databinding.EventCardVerticalBinding
 import com.latihan.dicodingevent.data.remote.models.ListEventsModel
+import com.latihan.dicodingevent.databinding.EventCardVerticalBinding
 import com.latihan.dicodingevent.ui.adapters.FinishedEventAdapter.OnFavouriteClickCallback
 
 class SearchEventAdapter: RecyclerView.Adapter<SearchEventAdapter.ViewHolder>() {

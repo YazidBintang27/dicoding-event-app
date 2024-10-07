@@ -21,7 +21,7 @@ class FavouriteEventAdapter: RecyclerView.Adapter<FavouriteEventAdapter.ViewHold
    }
 
    interface OnFavouriteClickCallBack {
-      fun onFavouriteClicked(isFavourite: Boolean, favouriteEventEntity: FavouriteEventEntity)
+      fun onFavouriteClicked(ignoredIsFavourite: Boolean, favouriteEventEntity: FavouriteEventEntity)
    }
 
    fun setOnItemClickCallback(onItemClickCallback: OnItemClickCallback) {

@@ -4,21 +4,19 @@ import android.Manifest
 import android.annotation.SuppressLint
 import android.os.Build
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.CompoundButton
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.appcompat.app.AppCompatDelegate
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import com.google.android.material.snackbar.Snackbar
 import com.latihan.dicodingevent.R
 import com.latihan.dicodingevent.databinding.FragmentSettingBinding
-import com.latihan.dicodingevent.ui.detail.DetailFragmentArgs
 import com.latihan.dicodingevent.utils.NetworkUtils
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -39,10 +37,6 @@ class SettingFragment : Fragment() {
             Toast.makeText(context, "Notifications permission rejected", Toast.LENGTH_SHORT).show()
          }
       }
-
-   override fun onCreate(savedInstanceState: Bundle?) {
-      super.onCreate(savedInstanceState)
-   }
 
    override fun onCreateView(
       inflater: LayoutInflater, container: ViewGroup?,
