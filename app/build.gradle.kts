@@ -62,6 +62,7 @@ dependencies {
    //Dagger Hilt
    //noinspection GradleDependency
    implementation(libs.hilt.android)
+   implementation(libs.hilt.work)
    ksp(libs.dagger.compiler) // Dagger compiler
    ksp(libs.hilt.compiler)   // Hilt compiler
 
@@ -94,4 +95,6 @@ dependencies {
    ksp(libs.androidx.room.compiler)
    implementation(libs.androidx.room.ktx)
 
+   // Work Manager
+   implementation(libs.androidx.work.runtime)
 }

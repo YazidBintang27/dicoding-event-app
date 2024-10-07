@@ -11,22 +11,22 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class ThemePreferences @Inject constructor(@ApplicationContext private val context: Context){
-   private val Context.datastore by preferencesDataStore("settings")
+class NotificationPreferences @Inject constructor(@ApplicationContext private val context: Context) {
+   private val Context.datastore by preferencesDataStore("notification_settings")
 
    companion object {
-      val DARK_MODE_KEY = booleanPreferencesKey("dark_mode")
+      val NOTIFICATION_ENABLED_KEY = booleanPreferencesKey("notification_enabled")
    }
 
-   fun getThemeSetting(): Flow<Boolean> {
+   fun getNotificationSetting(): Flow<Boolean> {
       return context.datastore.data.map { preferences ->
-         preferences[DARK_MODE_KEY] ?: false
+         preferences[NOTIFICATION_ENABLED_KEY] ?: false
       }
    }
 
-   suspend fun saveThemeSetting(isDarkMode: Boolean) {
+   suspend fun saveNotificationSetting(isNotificationEnabled: Boolean) {
       context.datastore.edit { preferences ->
-         preferences[DARK_MODE_KEY] = isDarkMode
+         preferences[NOTIFICATION_ENABLED_KEY] = isNotificationEnabled
       }
    }
 }

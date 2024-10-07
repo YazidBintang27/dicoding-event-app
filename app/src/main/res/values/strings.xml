@@ -26,4 +26,11 @@
     <string name="setting">Setting</string>
     <string name="dark_mode">Dark Mode</string>
     <string name="enable_dark_mode">Enable dark mode</string>
+    <string name="enable_notification">Enable notification</string>
+    <string name="daily_reminder">Daily Reminder</string>
+    <string name="no_internet_connection">No Internet Connection</string>
+    <string name="internet_connected">Internet Connected</string>
+    <string name="still_no_internet">Still no internet connection</string>
+    <string name="retry">Retry</string>
+    <string name="notification_message">Recommendation event for you on %1$s</string>
 </resources>

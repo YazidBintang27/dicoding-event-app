@@ -29,6 +29,10 @@ class RepositoryImpl @Inject constructor(
       return apiService.getDetailEventById(id)
    }
 
+   override suspend fun requestNotification(): ListEventsModel {
+      return apiService.getNotification()
+   }
+
    override suspend fun addFavouriteEvent(favouriteEventEntity: FavouriteEventEntity) {
       dao.insertFavouriteEvent(favouriteEventEntity)
    }

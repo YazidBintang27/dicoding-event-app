@@ -118,16 +118,16 @@ class HomeFragment : Fragment() {
 
    @SuppressLint("ShowToast")
    private fun showNoInternetWarning(view: View) {
-      Snackbar.make(view, "No Internet Connection", Snackbar.LENGTH_INDEFINITE)
-         .setAction("Retry") {
+      Snackbar.make(view, getString(R.string.no_internet_connection), Snackbar.LENGTH_INDEFINITE)
+         .setAction(getString(R.string.retry)) {
             if (NetworkUtils.isNetworkAvailable(requireContext())) {
-               Snackbar.make(view, "Internet Connected", Snackbar.LENGTH_SHORT).dismiss()
+               Snackbar.make(view, getString(R.string.internet_connected), Snackbar.LENGTH_SHORT).dismiss()
                observeLoadingState()
                observeUpcomingEvent()
                observeFinishedEvent()
                navigateToDetail()
             } else {
-               Snackbar.make(view, "Still no internet connection", Snackbar.LENGTH_SHORT).show()
+               Snackbar.make(view, getString(R.string.still_no_internet), Snackbar.LENGTH_SHORT).show()
             }
          }.show()
    }

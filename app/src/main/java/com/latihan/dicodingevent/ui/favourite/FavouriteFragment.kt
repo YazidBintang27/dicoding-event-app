@@ -1,21 +1,23 @@
 package com.latihan.dicodingevent.ui.favourite
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.snackbar.Snackbar
 import com.latihan.dicodingevent.R
 import com.latihan.dicodingevent.data.local.entity.FavouriteEventEntity
 import com.latihan.dicodingevent.databinding.FragmentFavouriteBinding
 import com.latihan.dicodingevent.ui.adapters.FavouriteEventAdapter
 import com.latihan.dicodingevent.ui.adapters.FavouriteEventAdapter.OnItemClickCallback
-import com.latihan.dicodingevent.ui.finished.FinishedFragmentDirections
+import com.latihan.dicodingevent.utils.NetworkUtils
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -47,6 +49,10 @@ class FavouriteFragment : Fragment() {
       navigateToSetting()
       navigateToDetail()
       deleteFavourite()
+      if (!NetworkUtils.isNetworkAvailable(requireContext())) {
+         showNoInternetWarning(view)
+         return
+      }
    }
 
    private fun observeFavouriteEventData() {
@@ -55,6 +61,13 @@ class FavouriteFragment : Fragment() {
             adapter = favouriteEventAdapter
             setHasFixedSize(true)
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+         }
+         if (response.isEmpty()) {
+            binding.tvNoData.visibility = View.VISIBLE
+            binding.rvFavouriteEvents.visibility = View.GONE
+         } else {
+            binding.tvNoData.visibility = View.GONE
+            binding.rvFavouriteEvents.visibility = View.VISIBLE
          }
          favouriteEventAdapter.setData(response)
       }
@@ -98,5 +111,20 @@ class FavouriteFragment : Fragment() {
             favouriteViewModel.deleteFavouriteEvent(favouriteEventEntity)
          }
       })
+   }
+
+   @SuppressLint("ShowToast")
+   private fun showNoInternetWarning(view: View) {
+      Snackbar.make(view, getString(R.string.no_internet_connection), Snackbar.LENGTH_INDEFINITE)
+         .setAction(getString(R.string.retry)) {
+            if (NetworkUtils.isNetworkAvailable(requireContext())) {
+               Snackbar.make(view, getString(R.string.internet_connected), Snackbar.LENGTH_SHORT).dismiss()
+               observeLoadingState()
+               observeFavouriteEventData()
+               deleteFavourite()
+            } else {
+               Snackbar.make(view, getString(R.string.still_no_internet), Snackbar.LENGTH_SHORT).show()
+            }
+         }.show()
    }
 }

@@ -16,6 +16,8 @@ interface Repository {
 
    suspend fun requestDetailEvent(id: Int): DetailEventModel
 
+   suspend fun requestNotification(): ListEventsModel
+
    // Room Database Methods
    suspend fun addFavouriteEvent(favouriteEventEntity: FavouriteEventEntity)
 

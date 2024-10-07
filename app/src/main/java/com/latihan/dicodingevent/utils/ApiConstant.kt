@@ -6,4 +6,5 @@ object ApiConstant {
    const val FINISHED_ENDPOINT = "/events?active=0"
    const val SEARCH_ENDPOINT = "/events?active=-1"
    const val DETAIL_ENDPOINT = "/events/{id}"
+   const val NOTIFICATION_ENDPOINT = "/events?active=-1&limit=1"
 }

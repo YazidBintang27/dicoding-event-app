@@ -2,12 +2,21 @@ package com.latihan.dicodingevent.di
 
 import android.app.Application
 import android.content.Context
+import androidx.hilt.work.HiltWorkerFactory
 import androidx.room.Room
+import androidx.work.Configuration
+import androidx.work.ListenableWorker
+import androidx.work.WorkManager
+import androidx.work.WorkerFactory
+import androidx.work.WorkerParameters
+import com.latihan.dicodingevent.data.local.datastore.NotificationPreferences
 import com.latihan.dicodingevent.data.local.datastore.ThemePreferences
 import com.latihan.dicodingevent.data.local.room.EventDatabase
 import com.latihan.dicodingevent.data.local.room.FavouriteEventDao
+import com.latihan.dicodingevent.data.remote.repository.Repository
 import com.latihan.dicodingevent.data.remote.service.ApiService
 import com.latihan.dicodingevent.utils.ApiConstant
+import com.latihan.dicodingevent.worker.NotificationWorker
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -56,5 +65,17 @@ object AppModule {
    @Singleton
    fun provideThemePreferences(@ApplicationContext context: Context): ThemePreferences {
       return ThemePreferences(context)
+   }
+
+   @Provides
+   @Singleton
+   fun provideNotificationPreferences(@ApplicationContext context: Context): NotificationPreferences {
+      return NotificationPreferences(context)
+   }
+
+   @Provides
+   @Singleton
+   fun provideWorkManager(@ApplicationContext context: Context): WorkManager {
+      return WorkManager.getInstance(context)
    }
 }
